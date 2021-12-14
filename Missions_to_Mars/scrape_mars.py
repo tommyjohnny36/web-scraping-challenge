@@ -9,18 +9,7 @@ def init_browser():
     return Browser("chrome", **executable_path, headless=False)
 
 
-def scrape_img(search_url):
-    # Retrieve page with the requests module
-    response = requests.get(search_url)
-    # create soup object
-    soup = bs(response.text, "html5lib")
-    # store high-res img URL in variable 'hem_img_url' & then add to the 'hem_url' to create a complete URL
-    hem_img_url = soup.find('img', class_='wide-image')['src']
-    final_img_url = hem_url + hem_img_url
-    # store the image_url information into dictionary
-    title_img_dicts['image_url'] = final_img_url
-    
-    return (title_img_dicts['image_url'])
+
             
             
 def dict_to_list(dict):
@@ -94,6 +83,18 @@ def scrape_data():
     hem_html = browser.html
     hem_soup = bs(hem_html, "lxml")
 
+    def scrape_img(search_url):
+        # Retrieve page with the requests module
+        response = requests.get(search_url)
+        # create soup object
+        soup = bs(response.text, "html5lib")
+        # store high-res img URL in variable 'hem_img_url' & then add to the 'hem_url' to create a complete URL
+        hem_img_url = soup.find('img', class_='wide-image')['src']
+        final_img_url = hem_url + hem_img_url
+        # store the image_url information into dictionary
+        title_img_dicts['image_url'] = final_img_url
+        return (title_img_dicts['image_url'])    
+
     # * Save both the image url string for the full resolution hemisphere image, and the Hemisphere title containing the hemisphere name. 
     # Use a Python dictionary to store the data using the keys `img_url` and `title`.
 
@@ -127,6 +128,8 @@ def scrape_data():
         # for each hemisphere.
         hemisphere_img_urls.append(dict_to_list(title_img_dicts))
 
+
+    
     # Store all data into a single dictionary
     mars_data = {
         "Most Recent Headline": news_title,
