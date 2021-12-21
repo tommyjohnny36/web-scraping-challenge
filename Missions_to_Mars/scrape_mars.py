@@ -7,9 +7,6 @@ import pandas as pd
 def init_browser():
     executable_path = {"executable_path": r"\Users\z0042xeh\.wdm\drivers\chromedriver\win32\96.0.4664.45\chromedriver.exe"}
     return Browser("chrome", **executable_path, headless=False)
-
-
-
             
             
 def dict_to_list(dict):
@@ -36,11 +33,11 @@ def scrape_data():
 
     # Get most recent news stories and assign to variable
     news_title = news_soup.find('div', 'content_title').text
-    print(news_title)
+    # print(news_title)
 
     # Get most recent news story article text and assign to variable
     news_p = news_soup.find('div', 'article_teaser_body').text
-    print(news_p)
+    # print(news_p)
 ####################################### Featured Image #################################################
 
     # URL to Mars Space Images
@@ -59,7 +56,7 @@ def scrape_data():
 
     # Create a url out of the url for the index.html & the featured image location
     featured_image_url = image_url + featured_image
-    print(featured_image_url)
+    # print(featured_image_url)
 
 ####################################### Facts ###########################################################
 
@@ -70,7 +67,7 @@ def scrape_data():
     # convert table into a pandas table to make easier to read
     facts_df = facts_table[0]
     # save the facts_tab as .html doc & save into variable for final results at end of scrape function
-    html_table = facts_df.to_html('templates/facts_tab_html.html')
+    html_table = facts_df.to_html()
 
 ####################################### Hemisphere ########################################################
 
@@ -132,11 +129,11 @@ def scrape_data():
     
     # Store all data into a single dictionary
     mars_data = {
-        "Most Recent Headline": news_title,
-        "Recent Headline Teaser": news_p,
-        "Featured Image": featured_image_url,
-        "Mars Facts": html_table,
-        "Mars Hemispheres": hemisphere_img_urls
+        "most_recent_headline": news_title,
+        "recent_headline_teaser": news_p,
+        "featured_image": featured_image_url,
+        "mars_facts": html_table,
+        "mars_hemispheres": hemisphere_img_urls
     }
     # quit the browser after scraping
     browser.quit()
